@@ -116,6 +116,7 @@
  
   # --- General development ---
   git
+  jq
   gh
   gcc
   gnumake
