@@ -113,7 +113,8 @@
   #  wget
   kdePackages.kate
   inputs.kwin-effects-better-blur-dx.packages.${pkgs.system}.default
- 
+  klassy
+  inputs.kwin-effects-glass.packages.${pkgs.system}.default 
   # --- General development ---
   git
   jq
