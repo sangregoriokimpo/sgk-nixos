@@ -2,14 +2,19 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix 
-      "${inputs.nixos-hardware}/framework/16-inch/amd-ai-300-series/nvidia"
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    "${inputs.nixos-hardware}/framework/16-inch/amd-ai-300-series/nvidia"
+  ];
 
   # Bootloader.
   #boot.loader.systemd-boot.enable = true;
@@ -21,32 +26,32 @@
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.extraEntries = ''
-  menuentry "Pop!_OS" {
-    insmod part_gpt
-    insmod fat
-    insmod chain
-    search --fs-uuid --set=root 28BE-DCB5
-    chainloader /EFI/systemd/systemd-bootx64.efi
-  }
+    menuentry "Pop!_OS" {
+      insmod part_gpt
+      insmod fat
+      insmod chain
+      search --fs-uuid --set=root 28BE-DCB5
+      chainloader /EFI/systemd/systemd-bootx64.efi
+    }
 
-  menuentry "Pop!_OS (direct kernel boot - fallback)" {
-    insmod part_gpt
-    insmod ext2
-    search --no-floppy --fs-uuid --set=root 5dc49cb6-9897-42b1-b597-a73a4bc91509
-    linux /boot/vmlinuz root=UUID=5dc49cb6-9897-42b1-b597-a73a4bc91509 ro quiet splash
-    initrd /boot/initrd.img
-  }
+    menuentry "Pop!_OS (direct kernel boot - fallback)" {
+      insmod part_gpt
+      insmod ext2
+      search --no-floppy --fs-uuid --set=root 5dc49cb6-9897-42b1-b597-a73a4bc91509
+      linux /boot/vmlinuz root=UUID=5dc49cb6-9897-42b1-b597-a73a4bc91509 ro quiet splash
+      initrd /boot/initrd.img
+    }
 
-  menuentry "Windows" {
-    insmod part_gpt
-    insmod fat
-    insmod chain
-    search --fs-uuid --set=root B826-717F
-    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-  }
-'';
+    menuentry "Windows" {
+      insmod part_gpt
+      insmod fat
+      insmod chain
+      search --fs-uuid --set=root B826-717F
+      chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+    }
+  '';
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "amakusa"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -114,11 +119,17 @@
   users.users."sgk" = {
     isNormalUser = true;
     description = "Gregorio Kimpo";
-    extraGroups = [ "networkmanager" "wheel"  "adbusers" "dialout" "docker"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "adbusers"
+      "dialout"
+      "docker"
+    ];
     packages = with pkgs; [
       kdePackages.kate
-  #inputs.kwin-effects-better-blur-dx.packages.${pkgs.system}.default
-    #  thunderbird
+      #inputs.kwin-effects-better-blur-dx.packages.${pkgs.system}.default
+      #  thunderbird
     ];
   };
   #programs.adb.enable = true;
@@ -129,43 +140,63 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-  kdePackages.kate
-  inputs.kwin-effects-better-blur-dx.packages.${pkgs.system}.default
-  klassy
-  inputs.kwin-effects-glass.packages.${pkgs.system}.default 
-  # --- General development ---
-  git
-  jq
-  gh
-  gcc
-  gnumake
-  cmake
-  pkg-config
-  python3
-  python3Packages.pip
-  nodejs_22
-  docker-compose
-  gnupg
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
+    kdePackages.kate
+    inputs.kwin-effects-better-blur-dx.packages.${pkgs.system}.default
+    klassy
+    inputs.kwin-effects-glass.packages.${pkgs.system}.default
+    # --- General development ---
+    git
+    jq
+    gh
+    gcc
+    gnumake
+    cmake
+    pkg-config
+    python3
+    python3Packages.pip
+    nodejs_22
+    docker-compose
+    gnupg
 
-  # --- VSCode ---
-  vscode
-  vim
-  # --- KiCad ---
-  kicad
+    # --- VSCode ---
+    vscode
+    vim
+    # --- KiCad ---
+    kicad
 
-  # --- Android development ---
-  android-studio
-  android-tools
-  jdk17
+    # --- Android development ---
+    android-studio
+    android-tools
+    jdk17
+    # --- Gaming ---
+    discord
+    spotify
+    vinegar   # Roblox Studio — native nix package
+
+    # --- AI dev ---
+    inputs.opencode-nix.packages.${pkgs.system}.default
+    inputs.lmstudio-nix.packages.${pkgs.system}.default
+    ollama-cuda
+    cudaPackages.cudatoolkit
+    cudaPackages.cudnn
+
+    # --- Misc ---
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
+  environment.shellAliases = {
+    update_sgk-nix = "sudo nixos-rebuild switch && sudo /etc/nixos/commit.sh && git -C /etc/nixos push";
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -197,4 +228,22 @@
     amdgpuBusId = "PCI:195:0:0";
     nvidiaBusId = "PCI:194:0:0";
   };
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;  # needed for Steam
+  };
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    gamescopeSession.enable = true;
+  };
+
+  programs.gamemode.enable = true;
+
+  services.flatpak.enable = true;
+  system.activationScripts.flathub-remote.text = ''
+    ${pkgs.flatpak}/bin/flatpak remote-add --if-not-exists flathub \
+      https://flathub.org/repo/flathub.flatpakrepo
+  '';
 }
