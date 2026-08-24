@@ -20,6 +20,15 @@
     useOSProber = true;
   };
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.extraEntries = ''
+    menuentry "Pop!_OS" {
+      insmod part_gpt
+      insmod fat
+      insmod chain
+      search --fs-uuid --set=root 28BE-DCB5
+      chainloader /EFI/systemd/systemd-bootx64.efi
+    }
+  '';
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
