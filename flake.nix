@@ -28,7 +28,7 @@
   };
 
   outputs = { self, nixpkgs, nixos-hardware, kwin-effects-better-blur-dx, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.amakusa = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
