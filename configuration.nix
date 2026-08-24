@@ -17,18 +17,34 @@
     enable = true;
     efiSupport = true;
     device = "nodev";
-    useOSProber = true;
+    useOSProber = false;
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.extraEntries = ''
-    menuentry "Pop!_OS" {
-      insmod part_gpt
-      insmod fat
-      insmod chain
-      search --fs-uuid --set=root 28BE-DCB5
-      chainloader /EFI/systemd/systemd-bootx64.efi
-    }
-  '';
+  menuentry "Pop!_OS" {
+    insmod part_gpt
+    insmod fat
+    insmod chain
+    search --fs-uuid --set=root 28BE-DCB5
+    chainloader /EFI/systemd/systemd-bootx64.efi
+  }
+
+  menuentry "Pop!_OS (direct kernel boot - fallback)" {
+    insmod part_gpt
+    insmod ext2
+    search --no-floppy --fs-uuid --set=root 5dc49cb6-9897-42b1-b597-a73a4bc91509
+    linux /boot/vmlinuz root=UUID=5dc49cb6-9897-42b1-b597-a73a4bc91509 ro quiet splash
+    initrd /boot/initrd.img
+  }
+
+  menuentry "Windows" {
+    insmod part_gpt
+    insmod fat
+    insmod chain
+    search --fs-uuid --set=root B826-717F
+    chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+  }
+'';
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
