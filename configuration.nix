@@ -202,9 +202,6 @@
     cudaPackages.cudatoolkit
     cudaPackages.cudnn
 
-    # NVIDIA Isaac Sim
-    inputs.isaac-flake.packages.${pkgs.stdenv.hostPlatform.system}.isaacsim
-
     # Google Antigravity
     inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
 
