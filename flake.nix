@@ -66,7 +66,7 @@
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
-        # Binary caches for both COSMIC and ROS
+        # Binary caches for COSMIC and ROS
         {
           nix.settings = {
             substituters = [
@@ -80,6 +80,17 @@
           };
           nixpkgs.overlays = [
             nix-ros-overlay.overlays.default
+            # Fix hash mismatch on cosmic-greeter source
+            (final: prev: {
+              cosmic-greeter = prev.cosmic-greeter.overrideAttrs (oldAttrs: {
+                src = final.fetchFromGitHub {
+                  owner = "pop-os";
+                  repo = "cosmic-greeter";
+                  rev = oldAttrs.src.rev or oldAttrs.version;
+                  hash = "sha256-ERytoauws6FDJNXItflOE2MwjxwariiO8RXU1x1chkE=";
+                };
+              });
+            })
           ];
         }
         nixos-cosmic.nixosModules.default

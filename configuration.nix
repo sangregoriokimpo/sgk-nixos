@@ -76,26 +76,25 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # --- Display Manager: SDDM ---
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-  };
+  # --- Display Manager: COSMIC Greeter ---
+  services.displayManager.sddm.enable = false;
+  services.displayManager.cosmic-greeter.enable = true;
 
-  # --- Desktop Environment 1: KDE Plasma 6 ---
-  services.desktopManager.plasma6.enable = true;
-
-  # --- Desktop Environment 2: COSMIC DE ---
+  # --- Desktop Environments & Window Managers ---
+  # COSMIC DE
   services.desktopManager.cosmic.enable = true;
   services.system76-scheduler.enable = true;
 
-  # --- Window Manager 3: Hyprland ---
+  # KDE Plasma 6
+  services.desktopManager.plasma6.enable = true;
+
+  # Hyprland
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
   };
 
-  # Optional hint for Wayland compatibility
+  # Wayland hint for Electron apps
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Configure keymap in X11
@@ -173,14 +172,10 @@
     docker-compose
     gnupg
 
-    # --- Build tools for ROS development ---
+    # --- ROS Tools & Packages ---
     colcon
-
-    # --- ROS 2 Jazzy Packages ---
     rosPackages.jazzy.ros-core
     rosPackages.jazzy.rviz2
-
-    # --- ROS 2 Kilted Packages ---
     rosPackages.kilted.ros-core
 
     # --- VSCode & Editors ---
