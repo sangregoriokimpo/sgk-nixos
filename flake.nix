@@ -12,6 +12,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Gazebo (gz-fortress/harmonic/ionic/jetty) packages.
+    # Deliberately NOT following our nixpkgs: it ships its own pins
+    # (incl. patched freeimage) and breaks if forced onto ours.
+    gazebros2nix.url = "github:Gepetto/gazebros2nix";
+
     # Antigravity Flake
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
@@ -52,6 +57,7 @@
       nixos-hardware,
       nix-ros-overlay,
       antigravity-nix,
+      gazebros2nix,
       ...
     }@inputs:
     let

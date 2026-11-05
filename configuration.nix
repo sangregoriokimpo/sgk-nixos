@@ -11,6 +11,38 @@
 
 let
   unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  system = pkgs.stdenv.hostPlatform.system;
+
+  # One merged ROS 2 Jazzy environment (instead of listing ros-core from
+  # two distros, which collide in a single profile).
+  rosJazzy = pkgs.rosPackages.jazzy.buildEnv {
+    paths = with pkgs.rosPackages.jazzy; [
+      ros-core
+      rviz2
+      xacro
+      robot-state-publisher
+      joint-state-publisher-gui
+      ros2-control
+      ros2-controllers
+      rqt-graph
+      tf2-tools
+      rosbag2
+      teleop-twist-keyboard
+      # ros-gz  # see note: may clash with gz-harmonic below; try it in a dev shell first
+    ];
+  };
+
+  # Python with MuJoCo + common sim deps (pip is included).
+  pythonSim = pkgs.python3.withPackages (
+    ps: with ps; [
+      pip
+      mujoco
+      numpy
+      scipy
+      matplotlib
+      glfw
+    ]
+  );
 in
 {
   imports = [
@@ -186,17 +218,20 @@ in
     gnumake
     cmake
     pkg-config
-    python3
-    python3Packages.pip
+    pythonSim # python3 + pip + mujoco/numpy/scipy/matplotlib/glfw
     nodejs_22
     docker-compose
     gnupg
 
     # --- ROS Tools & Packages ---
     colcon
-    rosPackages.jazzy.ros-core
-    rosPackages.jazzy.rviz2
-    rosPackages.kilted.ros-core
+    rosJazzy
+
+    # --- Simulation: Gazebo + MuJoCo ---
+    inputs.gazebros2nix.packages.${system}.gz-harmonic
+    mujoco # C library + simulate viewer
+    glfw
+    libGL
 
     # --- VSCode & Editors ---
     vscode
@@ -323,6 +358,7 @@ in
       libxkbcommon
       vulkan-loader
       udev
+      glfw
       # add whatever the debug output says is missing
     ];
   };
