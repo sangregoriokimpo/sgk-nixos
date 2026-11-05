@@ -243,12 +243,13 @@ in
     settings = {
       add_newline = false;
 
-      format = "$os$directory$git_branch$git_status$nix_shell$cmd_duration$line_break$character";
+      format = "[╭─](bold #5277C3)$os$directory$git_branch$git_status$nix_shell$cmd_duration$line_break[╰─](bold #5277C3)$character";
 
       os = {
         disabled = false;
         style = "bold #7EBAE4";
-        symbols.NixOS = " ";
+        format = "[$symbol]($style) ";
+        symbols.NixOS = builtins.fromJSON ''"\uf313"'';
       };
 
       directory = {
