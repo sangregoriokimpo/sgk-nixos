@@ -164,6 +164,11 @@ in
     unstable.cosmic-ext-applet-workspace-icons
     unstable.cosmic-ext-ctl
     unstable.cosmic-ext-tweaks
+    unstable.cosmic-ext-calculator
+    unstable.tasks
+    unstable.cosmic-reader
+    unstable.cosmic-viewer
+    unstable.cosmic-osk
 
     # --- Hyprland Tools & Utilities ---
     kitty
