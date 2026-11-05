@@ -65,9 +65,8 @@
       # Take the core COSMIC desktop packages from unstable
       cosmicFromUnstable =
         final: prev:
-        nixpkgs.lib.genAttrs [
+        (nixpkgs.lib.genAttrs [
           "cosmic-applets"
-          "cosmic-applibrary"
           "cosmic-bg"
           "cosmic-comp"
           "cosmic-edit"
@@ -92,7 +91,13 @@
           "cosmic-workspaces-epoch"
           "xdg-desktop-portal-cosmic"
           "libcosmicAppHook"
-        ] (name: pkgsUnstable.${name});
+        ] (name: pkgsUnstable.${name}))
+        // {
+          # Renamed in unstable; keep both names so the stable module
+          # works regardless of which one it references.
+          cosmic-app-library = pkgsUnstable.cosmic-app-library;
+          cosmic-applibrary = pkgsUnstable.cosmic-app-library;
+        };
     in
     {
       nixosConfigurations.amakusa = nixpkgs.lib.nixosSystem {
