@@ -300,6 +300,19 @@ in
 
   programs.gamemode.enable = true;
 
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc
+      zlib
+      libGL
+      libxkbcommon
+      vulkan-loader
+      udev
+      # add whatever the debug output says is missing
+    ];
+  };
+
   services.flatpak.enable = true;
   system.activationScripts.flathub-remote.text = ''
     ${pkgs.flatpak}/bin/flatpak remote-add --if-not-exists flathub \
