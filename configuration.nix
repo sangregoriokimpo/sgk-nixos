@@ -232,6 +232,7 @@ in
     unstable.fetch
     nerd-fonts.jetbrains-mono
     warp-terminal
+    waveterm
 
     # --- Terminals ---
     ghostty
