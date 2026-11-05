@@ -243,7 +243,7 @@ in
     settings = {
       add_newline = false;
 
-      format = "[╭─](bold #5277C3)$os$username$directory$git_branch$git_status$nix_shell$cmd_duration$line_break[╰─](bold #5277C3)$character";
+      format = "[╭─](bold #5277C3)$os$username$hostname$directory$git_branch$git_status$nix_shell$cmd_duration$line_break[╰─](bold #5277C3)$character";
 
       os = {
         disabled = false;
