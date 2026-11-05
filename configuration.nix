@@ -243,13 +243,26 @@ in
     settings = {
       add_newline = false;
 
-      format = "[╭─](bold #5277C3)$os$directory$git_branch$git_status$nix_shell$cmd_duration$line_break[╰─](bold #5277C3)$character";
+      format = "[╭─](bold #5277C3)$os$username$directory$git_branch$git_status$nix_shell$cmd_duration$line_break[╰─](bold #5277C3)$character";
 
       os = {
         disabled = false;
         style = "bold #7EBAE4";
         format = "[$symbol]($style) ";
         symbols.NixOS = builtins.fromJSON ''"\uf313"'';
+      };
+
+      username = {
+        show_always = true;
+        style_user = "bold #7EBAE4";
+        style_root = "bold red";
+        format = "[$user]($style) ";
+      };
+
+      hostname = {
+        ssh_only = false;
+        format = "[@$hostname]($style) ";
+        style = "bold #5277C3";
       };
 
       directory = {
