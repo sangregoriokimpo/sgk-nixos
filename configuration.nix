@@ -228,7 +228,7 @@ in
     rosJazzy
 
     # --- Simulation: Gazebo + MuJoCo ---
-    inputs.gazebros2nix.packages.${system}.gz-harmonic
+    (lib.hiPrio inputs.gazebros2nix.packages.${system}.gz-harmonic)
     mujoco # C library + simulate viewer
     glfw
     libGL
