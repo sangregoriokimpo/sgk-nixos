@@ -222,6 +222,9 @@ in
 
     # --- Misc ---
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+
+    # --- NixOS ---
+    unstable.fetch
   ];
 
   environment.shellAliases = {
