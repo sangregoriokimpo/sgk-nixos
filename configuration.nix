@@ -146,9 +146,9 @@
   environment.systemPackages = with pkgs; [
     # --- KDE Extras ---
     kdePackages.kate
-    inputs.kwin-effects-better-blur-dx.packages.${pkgs.system}.default
+    inputs.kwin-effects-better-blur-dx.packages.${pkgs.stdenv.hostPlatform.system}.default
     klassy
-    inputs.kwin-effects-glass.packages.${pkgs.system}.default
+    inputs.kwin-effects-glass.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # --- Hyprland Tools & Utilities ---
     kitty
