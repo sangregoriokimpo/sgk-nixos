@@ -230,6 +230,9 @@ in
 
     # --- NixOS ---
     unstable.fetch
+
+    # --- Terminals ---
+    ghostty
   ];
 
   environment.shellAliases = {
