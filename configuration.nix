@@ -231,6 +231,7 @@ in
     # --- NixOS ---
     unstable.fetch
     nerd-fonts.jetbrains-mono
+    warp-terminal
 
     # --- Terminals ---
     ghostty
