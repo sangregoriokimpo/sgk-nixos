@@ -230,10 +230,49 @@ in
 
     # --- NixOS ---
     unstable.fetch
+    nerd-fonts.jetbrains-mono
 
     # --- Terminals ---
     ghostty
   ];
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = false;
+
+      format = "$os$directory$git_branch$git_status$nix_shell$cmd_duration$line_break$character";
+
+      os = {
+        disabled = false;
+        style = "bold #7EBAE4";
+        symbols.NixOS = " ";
+      };
+
+      directory = {
+        style = "bold #5277C3";
+        truncation_length = 3;
+      };
+
+      git_branch.style = "bold #c678dd";
+
+      nix_shell = {
+        symbol = " ";
+        format = "[$symbol$state]($style) ";
+        style = "bold #7EBAE4";
+      };
+
+      cmd_duration = {
+        min_time = 2000;
+        style = "yellow";
+      };
+
+      character = {
+        success_symbol = "[❯](bold #7EBAE4)";
+        error_symbol = "[❯](bold red)";
+      };
+    };
+  };
 
   environment.shellAliases = {
     update_sgk-nix = "sudo nixos-rebuild switch && sudo /etc/nixos/commit.sh && git -C /etc/nixos push";
