@@ -9,6 +9,9 @@
   ...
 }:
 
+let
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -150,6 +153,18 @@
     klassy
     inputs.kwin-effects-glass.packages.${pkgs.stdenv.hostPlatform.system}.default
 
+    # --- COSMIC applets & extras (from unstable) ---
+    unstable.cosmic-ext-applet-caffeine
+    unstable.cosmic-ext-applet-external-monitor-brightness
+    unstable.cosmic-ext-applet-mare-player
+    unstable.cosmic-ext-applet-minimon
+    unstable.cosmic-ext-applet-privacy-indicator
+    unstable.cosmic-ext-applet-sysinfo
+    unstable.cosmic-ext-applet-weather
+    unstable.cosmic-ext-applet-workspace-icons
+    unstable.cosmic-ext-ctl
+    unstable.cosmic-ext-tweaks
+
     # --- Hyprland Tools & Utilities ---
     kitty
     wofi
@@ -196,8 +211,8 @@
     vinegar
 
     # --- AI / Robotics Dev ---
-    inputs.opencode-nix.packages.${pkgs.system}.default
-    inputs.lmstudio-nix.packages.${pkgs.system}.default
+    inputs.opencode-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.lmstudio-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
     ollama-cuda
     cudaPackages.cudatoolkit
     cudaPackages.cudnn
