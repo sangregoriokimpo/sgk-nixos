@@ -272,18 +272,26 @@ in
     ollama-cuda
     cudaPackages.cudatoolkit
     cudaPackages.cudnn
+    opencode
+
 
     # Google Antigravity
     inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # --- Misc ---
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    google-chrome
+    onlyoffice-desktopeditors
 
     # --- NixOS ---
     unstable.fetch
     nerd-fonts.jetbrains-mono
     warp-terminal
     waveterm
+    htop
+    btop-cuda
+    cudaPackages.cudatoolkit
+    nvtopPackages.nvidia   # GPU monitor
 
     # --- Terminals ---
     ghostty
@@ -356,6 +364,9 @@ in
     enable = true;
     enable32Bit = true;
   };
+  
+  virtualisation.docker.enable = true;
+  hardware.nvidia-container-toolkit.enable = true;
 
   programs.steam = {
     enable = true;
