@@ -5,6 +5,7 @@
 {
   config,
   pkgs,
+  lib,
   inputs,
   ...
 }:
@@ -43,6 +44,20 @@ let
       glfw
     ]
   );
+
+  # gz-harmonic with the old Ubuntu bashrc fix baked in:
+  # force X11/XWayland (unset WAYLAND_DISPLAY) + render on the NVIDIA GPU.
+  gzOffload = pkgs.symlinkJoin {
+    name = "gz-harmonic-offload";
+    paths = [ inputs.gazebros2nix.packages.${system}.gz-harmonic ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/gz \
+        --unset WAYLAND_DISPLAY \
+        --set __NV_PRIME_RENDER_OFFLOAD 1 \
+        --set __GLX_VENDOR_LIBRARY_NAME nvidia
+    '';
+  };
 in
 {
   imports = [
@@ -228,7 +243,8 @@ in
     rosJazzy
 
     # --- Simulation: Gazebo + MuJoCo ---
-    (lib.hiPrio inputs.gazebros2nix.packages.${system}.gz-harmonic)
+    # hiPrio so this gz (with sim) beats the gz bundled in the ROS env
+    (lib.hiPrio gzOffload)
     mujoco # C library + simulate viewer
     glfw
     libGL
@@ -278,7 +294,7 @@ in
     settings = {
       add_newline = false;
 
-      format = "[╭─](bold #5277C3)$os$username$hostname$directory$git_branch$git_status$nix_shell$cmd_duration$line_break[╰─](bold #5277C3)$character";
+      format = "[╭─](bold #5277C3)$username$hostname$directory$git_branch$git_status$nix_shell$cmd_duration$line_break[╰─](bold #5277C3)$character";
 
       os = {
         disabled = false;
