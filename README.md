@@ -1,6 +1,6 @@
 <p align="center">
   <img src="assets/nixos-spin.gif" width="49%" alt="A1">
-  <img src="assets/fw.gif" width="49%" alt="A2">
+  <img src="assets/fwC.gif" width="49%" alt="A2">
 </p>
 
 <h1 align="center">sgk-nixos</h1>
