@@ -280,8 +280,6 @@ in
     cudaPackages.cuda_sanitizer_api  # compute-sanitizer for memory errors
     cudaPackages.libcudss            # sparse direct solvers
     cudaPackages.libcusparse_lt        # sparse matmul, needed by some PyTorch builds
-    cudaPackages.nsight_systems
-    cudaPackages.nsight_compute
 
 
     # Google Antigravity
