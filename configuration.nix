@@ -272,7 +272,8 @@ in
     ollama-cuda
     cudaPackages.cudatoolkit
     cudaPackages.cudnn
-    opencode
+        cudaPackages.nsight_systems   # system-wide profiler
+    cudaPackages.nsight_compute   # CUDA kernel profiler
 
 
     # Google Antigravity
@@ -290,7 +291,6 @@ in
     waveterm
     htop
     btop-cuda
-    cudaPackages.cudatoolkit
     nvtopPackages.nvidia   # GPU monitor
 
     # --- Terminals ---
