@@ -272,8 +272,16 @@ in
     ollama-cuda
     cudaPackages.cudatoolkit
     cudaPackages.cudnn
-        cudaPackages.nsight_systems   # system-wide profiler
+    cudaPackages.nsight_systems   # system-wide profiler
     cudaPackages.nsight_compute   # CUDA kernel profiler
+    cudaPackages.nccl             # multi-GPU communication (PyTorch/distributed)
+    cudaPackages.libcutensor         # tensor ops library, used by some ML/sim libs
+    cudaPackages.cuda_gdb         # CUDA debugger
+    cudaPackages.cuda_sanitizer_api  # compute-sanitizer for memory errors
+    cudaPackages.libcudss            # sparse direct solvers
+    cudaPackages.libcusparse_lt        # sparse matmul, needed by some PyTorch builds
+    cudaPackages.nsight_systems
+    cudaPackages.nsight_compute
 
 
     # Google Antigravity
