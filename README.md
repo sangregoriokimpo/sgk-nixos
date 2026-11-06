@@ -1,6 +1,14 @@
-# sgk-nixos
+<p align="center">
+  <img src="assets/nixos-spin.gif" width="49%" alt="A1">
+  <img src="assets/fw.gif" width="49%" alt="A2">
+</p>
 
-Nix configuration for my personal NixOS machine, **Amakusa**, a mobile battlestation christened on Aug 10, 2024.
+<h1 align="center">sgk-nixos</h1>
+
+<p align="center">
+  Nix configuration for my personal NixOS machine, <b>Amakusa</b>,<br>
+  a mobile battlestation christened on Aug 10, 2024.
+</p>
 
 ## Specs
 
