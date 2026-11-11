@@ -67,10 +67,11 @@ Amakusa has a planned service life of **10 years** and has been through three re
 
 ## Commands
 
-**Update NixOS**
+**Update/Upgrade NixOS**
 
 ```bash
-update_sgk-nix
+update-sgk-nix
+upgrade-sgk-nix
 ```
 
 **Clean up old generations**
