@@ -357,6 +357,7 @@ in
 
   environment.shellAliases = {
     update_sgk-nix = "sudo nixos-rebuild switch && sudo /etc/nixos/commit.sh && git -C /etc/nixos push";
+    upgrade_sgk-nix = "sudo nixos-rebuild switch --upgrade && sudo /etc/nixos/commit.sh && git -C /etc/nixos push";
   };
 
   system.stateVersion = "26.05";
